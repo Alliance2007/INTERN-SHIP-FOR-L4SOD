@@ -10,14 +10,12 @@ app.use(cors({
 
 app.use(express.json());
 
-
-  //  👉 INSERT MODULE
-
+/* =========================
+   👉 INSERT MODULE
+========================= */
 app.post("/modules", (req, res) => {
   const {
-    
-    
-    
+    moduleName,
     moduleCode,
     trainer,
     description,
@@ -64,8 +62,9 @@ app.post("/modules", (req, res) => {
   });
 });
 
-  //  👉 GET ALL MODULES
-
+/* =========================
+   👉 GET ALL MODULES
+========================= */
 app.get("/modules", (req, res) => {
   db.query("SELECT * FROM modules ORDER BY id ASC", (err, result) => {
     if (err) {
@@ -76,9 +75,9 @@ app.get("/modules", (req, res) => {
   });
 });
 
-
-  //  👉 GET SINGLE MODULE ✅ FIXED
-
+/* =========================
+   👉 GET SINGLE MODULE
+========================= */
 app.get("/modules/:id", (req, res) => {
   const moduleId = req.params.id;
 
@@ -98,18 +97,12 @@ app.get("/modules/:id", (req, res) => {
   });
 });
 
-  //  👉 UPDATE MODULE
+/* =========================
+   👉 UPDATE MODULE (FIXED)
+========================= */
 app.put("/modules/:id", (req, res) => {
   const moduleId = req.params.id;
-const data= req.body;
-const moduleName=data["moduleName"];
-const moduleCode=data["moduleCode"];
-const moduleTrainer=data["moduleTrainer"];
-const moduleDescription=data["moduleDscription"];
-const moduleDuration=data["moduleDuration"];
-const moduleLevel=data["moduleLevel"];
-const modulestartDate=data["modulestartDate"];
-const moduleEndDate=data["moduleEndDate"];
+
   const {
     moduleName,
     moduleCode,
@@ -154,9 +147,9 @@ const moduleEndDate=data["moduleEndDate"];
   });
 });
 
-
-  //  👉 DELETE MODULE
-
+/* =========================
+   👉 DELETE MODULE
+========================= */
 app.delete("/modules/:id", (req, res) => {
   const moduleId = req.params.id;
 
@@ -170,8 +163,11 @@ app.delete("/modules/:id", (req, res) => {
   });
 });
 
-  //  👉 START SERVER
+/* =========================
+   👉 START SERVER
+========================= */
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => {
-  console.log("🚀 Server running on http://localhost:5000");
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
