@@ -5,14 +5,17 @@ import db from "./db.js";
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: [
+    "http://localhost:3000",
+    "https://intern-ship-for-l4sod1.onrender.com"
+  ]
 }));
 
 app.use(express.json());
 
-/* =========================
-   👉 INSERT MODULE
-========================= */
+
+  //  👉 INSERT MODULE
+
 app.post("/modules", (req, res) => {
   const {
     moduleName,
@@ -62,9 +65,9 @@ app.post("/modules", (req, res) => {
   });
 });
 
-/* =========================
-   👉 GET ALL MODULES
-========================= */
+
+  //  👉 GET ALL MODULES
+
 app.get("/modules", (req, res) => {
   db.query("SELECT * FROM modules ORDER BY id ASC", (err, result) => {
     if (err) {
@@ -75,9 +78,9 @@ app.get("/modules", (req, res) => {
   });
 });
 
-/* =========================
-   👉 GET SINGLE MODULE
-========================= */
+
+  //  👉 GET SINGLE MODULE
+
 app.get("/modules/:id", (req, res) => {
   const moduleId = req.params.id;
 
@@ -97,9 +100,9 @@ app.get("/modules/:id", (req, res) => {
   });
 });
 
-/* =========================
-   👉 UPDATE MODULE (FIXED)
-========================= */
+
+  //  👉 UPDATE MODULE (FIXED)
+
 app.put("/modules/:id", (req, res) => {
   const moduleId = req.params.id;
 
@@ -147,9 +150,9 @@ app.put("/modules/:id", (req, res) => {
   });
 });
 
-/* =========================
-   👉 DELETE MODULE
-========================= */
+
+  //  👉 DELETE MODULE
+
 app.delete("/modules/:id", (req, res) => {
   const moduleId = req.params.id;
 
@@ -163,11 +166,19 @@ app.delete("/modules/:id", (req, res) => {
   });
 });
 
-/* =========================
-   👉 START SERVER
-========================= */
+
+  //  👉 START SERVER
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
+});
+
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "🚀 API is running successfully",
+    endpoints: ["/modules"]
+  });
 });
